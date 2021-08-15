@@ -1,0 +1,36 @@
+1.串行化GC
+开启方式 -XX:+UseSerialGC
+DefNew
+2.并行化GC
+Java8默认的GC回收策略
+开启方式 -XX:+UseParallelGC
+ParNew
+默认打开自适应参数,每次GC暂停时间不同,有两极分化趋势
+ JVM会动态 调整年轻代、堆的容量，进入老年代的阈值等参数也会发生变化
+-XX:-UseAdaptiveSizePolicy
+
+-Xmx1g -Xms1g  =====>  -Xmx4g -Xms4g
+年轻代 老年代 内存都变大 ,JVM进行垃圾回收时,年轻代内存充足，老年代对象较少,只发生YongGC,
+GC次数减少，但是每次回收的数据量增多，GC暂停时间变长
+
+-Xms 参数缺失 即 不配置堆的初始大小  或者与-Xmx 堆最大大小不一致 GC次数明显增加
+3.CMC
+-XX:+UseConcMarkSweepGC
+回收老年代
+initial mark 初始标记
+一开始只标记根对象以及根对象可达对象，包括跨区的直接引用对象，回收速度比较快
+Concurrent Mark 并发标记
+Final Remark 最终标记
+Concurrent Sweep 并发清除
+Concurrent Reset 并发重置
+4.G1GC
+-XX:+UseG1GC
+
+
+
+
+
+
+
+
+
